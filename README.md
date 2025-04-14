@@ -46,9 +46,9 @@ let generateProofResult = try generateCircomProof(zkeyPath: zkeyPath, circuitInp
 Or checkout the [test-e2e](https://github.com/zkmopro/mopro/blob/793626f32ed34dcde382f5f304c301563126bc9d/test-e2e/ios/mopro-test/ContentView.swift#L90) app.
 
 > [!WARNING]  
-> The default bindings are built specifically for the `multiplier2` circom circuit. If you'd like to update the circuit or switch to a different proving scheme, please refer to the [How to Build the Package](#how-to-build-the-package) section.
-> Circuit source code: https://github.com/zkmopro/circuit-registry/tree/main/multiplier2
-> Example .zkey file for the circuit: http://ci-keys.zkmopro.org/multiplier2_final.zkey
+> The default bindings are built specifically for the `multiplier2` circom circuit. If you'd like to update the circuit or switch to a different proving scheme, please refer to the [How to Build the Package](#how-to-build-the-package) section.<br/>
+> Circuit source code: https://github.com/zkmopro/circuit-registry/tree/main/multiplier2<br/>
+> Example .zkey file for the circuit: http://ci-keys.zkmopro.org/multiplier2_final.zkey<br/>
 
 ## How to Build the Package
 
