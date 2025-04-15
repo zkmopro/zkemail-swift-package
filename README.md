@@ -1,6 +1,6 @@
-# Mopro Swift Package
+# zkEmail Swift Package via MoproFFI
 
-This package is used to generate a Swift SDK that wraps Mopro bindings for use in iOS applications.
+This package is used to generate a Swift SDK that wraps zkEmail bindings for use in iOS applications.
 
 ## How to Import the Package
 
@@ -10,7 +10,7 @@ This package is used to generate a Swift SDK that wraps Mopro bindings for use i
 
 2. Go to **File > Add package dependencies**.
 
-3. In _Search or Enter Package URL_, enter the URL: `https://github.com/zkmopro/mopro-swift-package`
+3. In _Search or Enter Package URL_, enter the URL: `https://github.com/zkmopro/zkemail-swift-package`
 
 4. Choose the version and add the package to your project.
 
@@ -23,7 +23,7 @@ let package = Package(
     name: "YourSwiftProject",
     // ...
     dependencies: [
-        .package(url: "https://github.com/zkmopro/mopro-swift-package") // Or change to your own URL
+        .package(url: "https://github.com/zkmopro/zkemail-swift-package") // Or change to your own URL
     ],
     // ...
     targets: [
@@ -34,21 +34,39 @@ let package = Package(
 
 ## How to Use the Package
 
-Here is an example of how to integrate and use this package
+### zkEmail Proofs
 
 ```swift
 import MoproFFI
 
-// ...
-let generateProofResult = try generateCircomProof(zkeyPath: zkeyPath, circuitInputs: input_str, proofLib: ProofLib.arkworks)
+// Parse your .eml files as inputs
+let inputs: [String: [String]] = [
+    "header_storage": [...], // Array of header storage bytes as strings
+    "header_len": ["123"],   // Header length
+    "pubkey_modulus": [...], // Modulus components
+    "pubkey_redc": [...],    // REDC components
+    "signature": [...],      // Signature components
+    "date_index": ["42"],
+    "subject_index": ["100"],
+    "subject_length": ["20"],
+    "from_header_index": ["150"],
+    "from_header_length": ["30"],
+    "from_address_index": ["200"],
+    "from_address_length": ["40"]
+]
+
+// Generate the proof
+let proofData = try! proveZkemail(srsPath: "/path/to/srs", inputs: inputs)
+
+// Verify the proof
+let isValid = try! verifyZkemail(srsPath: "/path/to/srs", proof: proofData)
 ```
 
-Or checkout the [test-e2e](https://github.com/zkmopro/mopro/blob/793626f32ed34dcde382f5f304c301563126bc9d/test-e2e/ios/mopro-test/ContentView.swift#L90) app.
 
 > [!WARNING]  
-> The default bindings are built specifically for the `multiplier2` circom circuit. If you'd like to update the circuit or switch to a different proving scheme, please refer to the [How to Build the Package](#how-to-build-the-package) section.<br/>
-> Circuit source code: https://github.com/zkmopro/circuit-registry/tree/main/multiplier2<br/>
-> Example .zkey file for the circuit: http://ci-keys.zkmopro.org/multiplier2_final.zkey<br/>
+> The package supports multiple circuit types including zkEmail's Noir circuits. If you'd like to update the circuits or switch to a different proving scheme, please refer to the [How to Build the Package](#how-to-build-the-package) section.<br/>
+> Circuit source code: https://github.com/zkmopro/circuit-registry<br/>
+> Example assets can be found in the test-e2e app or the circuit registry.
 
 ## How to Build the Package
 
