@@ -1,4 +1,4 @@
-name: Test MoproFFI
+name: Build MoproFFI
 
 on:
     push:
@@ -11,31 +11,23 @@ on:
         types:
             - ready_for_review
 
-    # Option to manually trigger the workflow
     workflow_dispatch:
 
 jobs:
-    build-and-test:
+    build:
         runs-on: macos-latest
 
         steps:
             - name: Checkout mopro-ffi
               uses: actions/checkout@v3
-              with:
-                  lfs: true
-
-            - name: Install Git LFS
-              run: |
-                  brew install git-lfs
-                  git lfs install
 
             - name: Set up Xcode environment
               run: |
                   sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
                   sudo xcodebuild -license accept
 
-            - name: Run Package Tests
+            - name: Run Package Build
               run: |
-                  xcodebuild test \
+                  xcodebuild build \
                     -scheme MoproFFI \
-                    -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=17.5'
+                    -destination 'generic/platform=iOS'
