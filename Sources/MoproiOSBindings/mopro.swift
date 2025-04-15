@@ -1088,6 +1088,20 @@ public func generateHalo2Proof(srsPath: String, pkPath: String, circuitInputs: [
     )
 })
 }
+public func prove() -> Bool  {
+    return try!  FfiConverterBool.lift(try! rustCall() {
+    uniffi_mopro_bindings_fn_func_prove($0
+    )
+})
+}
+public func proveZkemail(srsPath: String, inputs: [String: [String]]) -> Data  {
+    return try!  FfiConverterData.lift(try! rustCall() {
+    uniffi_mopro_bindings_fn_func_prove_zkemail(
+        FfiConverterString.lower(srsPath),
+        FfiConverterDictionaryStringSequenceString.lower(inputs),$0
+    )
+})
+}
 public func verifyCircomProof(zkeyPath: String, proofResult: CircomProofResult, proofLib: ProofLib)throws  -> Bool  {
     return try  FfiConverterBool.lift(try rustCallWithError(FfiConverterTypeMoproError_lift) {
     uniffi_mopro_bindings_fn_func_verify_circom_proof(
@@ -1104,6 +1118,14 @@ public func verifyHalo2Proof(srsPath: String, vkPath: String, proof: Data, publi
         FfiConverterString.lower(vkPath),
         FfiConverterData.lower(proof),
         FfiConverterData.lower(publicInput),$0
+    )
+})
+}
+public func verifyZkemail(srsPath: String, proof: Data) -> Bool  {
+    return try!  FfiConverterBool.lift(try! rustCall() {
+    uniffi_mopro_bindings_fn_func_verify_zkemail(
+        FfiConverterString.lower(srsPath),
+        FfiConverterData.lower(proof),$0
     )
 })
 }
@@ -1129,10 +1151,19 @@ private let initializationResult: InitializationResult = {
     if (uniffi_mopro_bindings_checksum_func_generate_halo2_proof() != 28088) {
         return InitializationResult.apiChecksumMismatch
     }
+    if (uniffi_mopro_bindings_checksum_func_prove() != 46869) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_mopro_bindings_checksum_func_prove_zkemail() != 12783) {
+        return InitializationResult.apiChecksumMismatch
+    }
     if (uniffi_mopro_bindings_checksum_func_verify_circom_proof() != 14151) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_mopro_bindings_checksum_func_verify_halo2_proof() != 24562) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_mopro_bindings_checksum_func_verify_zkemail() != 8016) {
         return InitializationResult.apiChecksumMismatch
     }
 
