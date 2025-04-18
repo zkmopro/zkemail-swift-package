@@ -1,4 +1,4 @@
-name: Build MoproFFI
+name: Build ZKEmailSwift
 
 on:
     push:
@@ -29,5 +29,5 @@ jobs:
             - name: Run Package Build
               run: |
                   xcodebuild build \
-                    -scheme MoproFFI \
+                    -scheme ZKEmailSwift \
                     -destination 'generic/platform=iOS'

@@ -4,19 +4,19 @@
 import PackageDescription
 
 let package = Package(
-    name: "MoproFFI",
+    name: "ZKEmailSwift",
     platforms: [
         .macOS(.v10_15),
         .iOS(.v15),
     ],
     products: [
         .library(
-            name: "MoproFFI",
-            targets: ["MoproFFI"]),
+            name: "ZKEmailSwift",
+            targets: ["ZKEmailSwift"]),
     ],
     targets: [
         .target(
-            name: "MoproFFI",
+            name: "ZKEmailSwift",
             dependencies: [
                 .byName(name: "mopro")
             ],
@@ -26,8 +26,8 @@ let package = Package(
             path: "Sources/MoproiOSBindings/MoproBindings.xcframework.zip"
         ),
         .testTarget(
-            name: "MoproFFITests",
-            dependencies: ["MoproFFI"],
+            name: "ZKEmailSwiftTests",
+            dependencies: ["ZKEmailSwift"],
             path: "Tests/",
             resources: [
                 .process("MoproAssets/zkemail_input.json"),

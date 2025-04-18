@@ -1,7 +1,7 @@
 import XCTest
 import Foundation
 
-@testable import MoproFFI
+@testable import ZKEmailSwift
 
 struct ZkEmailInputTest: Codable {
     struct Header: Codable {
@@ -25,7 +25,7 @@ struct ZkEmailInputTest: Codable {
     let from_address_sequence: Sequence
 }
 
-class MoproFFITests: XCTestCase {
+class ZKEmailSwiftTests: XCTestCase {
   func testZkEmailProveAndVerify() async throws {
     guard let srsPath = Bundle.module.path(forResource: "srs", ofType: "local") else {
       XCTFail("Failed to find srs.local in test bundle. Ensure it's added to the Tests target.")

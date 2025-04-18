@@ -27,17 +27,42 @@ let package = Package(
     ],
     // ...
     targets: [
-        .target(name: "YourSwiftProject", dependencies: ["MoproFFI"])
+        .target(name: "YourSwiftProject", dependencies: ["ZKEmailSwift"])
     ]
 )
 ```
+
+### Option 3: Using CocoaPods
+
+Add the following to your `Podfile`:
+
+```ruby
+platform :ios, '15.0'
+use_frameworks!
+
+target 'YourAppTarget' do
+  pod 'ZKEmailSwift', :git => 'https://github.com/zkmopro/zkemail-swift-package.git', :tag => 'v0.1.0'
+end
+```
+
+Then run:
+```sh
+pod install
+```
+
+Alternatively, if the pod is published to CocoaPods trunk, you can simply add:
+
+```ruby
+pod 'ZKEmailSwift', '~> 0.1.0'
+```
+and run `pod install`.
 
 ## How to Use the Package
 
 ### zkEmail Proofs
 
 ```swift
-import MoproFFI
+import ZKEmailSwift
 
 // Parse your .eml files as inputs
 let inputs: [String: [String]] = [
