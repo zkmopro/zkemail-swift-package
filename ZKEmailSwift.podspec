@@ -90,7 +90,7 @@ Pod::Spec.new do |spec|
 
     spec.source       = { :git => "https://github.com/zkmopro/zkemail-swift-package.git", :tag => "v#{spec.version}" }
     spec.source       = { :http => "https://zkemail.zkmopro.org/MoproBindings.xcframework.zip"}
-    spec.source_files  = "Sources/**/*.swift"
+    spec.source_files  = "Sources/**/*.{swift,h,m,mm,c,cpp}"
 
     spec.vendored_frameworks = "Sources/MoproiOSBindings/MoproBindings.xcframework"    
     spec.static_framework = true
