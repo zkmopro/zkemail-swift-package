@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
     #
   
     spec.name         = "ZKEmailSwift"
-    spec.version      = "0.2.5"
+    spec.version      = "0.2.6"
     spec.summary      = "A Swift SDK that wraps ZKEmail bindings for use in iOS apps."
   
     # This description is used to generate tags and improve search results.
@@ -89,10 +89,17 @@ Pod::Spec.new do |spec|
     #
 
     spec.source       = { :git => "https://github.com/zkmopro/zkemail-swift-package.git", :tag => "v#{spec.version}" }
-    spec.source       = { :http => "https://zkemail.zkmopro.org/MoproBindings.xcframework.zip"}
-    spec.source_files  = "Sources/**/*.{swift,h,m,mm,c,cpp}"
 
-    spec.vendored_frameworks = "Sources/MoproiOSBindings/MoproBindings.xcframework"    
+    spec.prepare_command = <<-CMD
+    # Always work from the Pod’s root directory
+    echo "▶︎ Unzipping MoproBindings.xcframework…"
+    unzip -o Sources/MoproiOSBindings/MoproBindings.xcframework.zip
+    rm -f Sources/MoproiOSBindings/MoproBindings.xcframework.zip
+    CMD
+
+    spec.vendored_frameworks = "Sources/MoproiOSBindings/MoproBindings.xcframework"
+    spec.source_files  = "Sources/**/*.swift"
+
     spec.static_framework = true
     
     
