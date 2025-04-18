@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
     #
   
     spec.name         = "ZKEmailSwift"
-    spec.version      = "0.2.4"
+    spec.version      = "0.2.5"
     spec.summary      = "A Swift SDK that wraps ZKEmail bindings for use in iOS apps."
   
     # This description is used to generate tags and improve search results.
@@ -87,18 +87,18 @@ Pod::Spec.new do |spec|
     #  Specify the location from where the source should be retrieved.
     #  Supports git, hg, bzr, svn and HTTP.
     #
-  
+
     spec.source       = { :git => "https://github.com/zkmopro/zkemail-swift-package.git", :tag => "v#{spec.version}" }
     spec.source       = { :http => "https://zkemail.zkmopro.org/MoproBindings.xcframework.zip"}
-    spec.vendored_frameworks = "Sources/MoproiOSBindings/MoproBindings.xcframework"
-    spec.preserve_paths = "Sources/MoproiOSBindings/**/*", "Sources/MoproiOSBindings/mopro.swift"
+    spec.source_files  = "Sources/**/*.swift"
 
+    spec.vendored_frameworks = "Sources/MoproiOSBindings/MoproBindings.xcframework"    
     spec.static_framework = true
-
-  
+    
+    
     # spec.public_header_files = "Classes/**/*.h"
-  
-  
+    
+    
     # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
     #
     #  A list of resources included with the Pod. These are copied into the
@@ -106,9 +106,10 @@ Pod::Spec.new do |spec|
     #  You can preserve files from being cleaned, please don't preserve
     #  non-essential files like tests, examples and documentation.
     #
-  
+    
     # spec.resource  = "icon.png"
-  
+    
+    spec.preserve_paths = "Sources/MoproiOSBindings/**/*"
     # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"
   
   
