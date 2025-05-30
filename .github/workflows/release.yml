@@ -23,9 +23,14 @@ jobs:
 
             - name: Set version in podspec
               run: |
-                  TAG_VERSION=${GITHUB_REF#refs/tags/}
-                  echo "Using version $TAG_VERSION"
-                  sed -i '' "s/spec.version *= *\".*\"/spec.version = \"$TAG_VERSION\"/" ZKEmailSwift.podspec
+                  if [[ "${GITHUB_REF}" =~ ^refs/tags/v(.+)$ ]]; then
+                      TAG_VERSION="${BASH_REMATCH[1]}"
+                      echo "✅ Using version $TAG_VERSION"
+                      sed -i '' "s/spec.version *= *\".*\"/spec.version = \"$TAG_VERSION\"/" ZKEmailSwift.podspec
+                  else
+                      echo "❌ Error: Git tag '${GITHUB_REF}' is not in the format 'vX.Y.Z'" >&2
+                      exit 1
+                  fi
 
             - name: Lint Podspec
               run: |
