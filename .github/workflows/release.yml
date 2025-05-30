@@ -1,0 +1,46 @@
+# .github/workflows/publish-pod-on-release.yml
+name: Publish CocoaPod on Release
+
+on:
+    release:
+        types: [published]
+
+jobs:
+    publish:
+        runs-on: macos-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Set up Ruby
+              uses: ruby/setup-ruby@v1
+              with:
+                  ruby-version: "3.2"
+
+            - name: Install CocoaPods
+              run: gem install cocoapods
+
+            - name: Set version in podspec
+              run: |
+                  TAG_VERSION=${GITHUB_REF#refs/tags/}
+                  echo "Using version $TAG_VERSION"
+                  sed -i '' "s/spec.version *= *\".*\"/spec.version = \"$TAG_VERSION\"/" ZKEmailSwift.podspec
+
+            - name: Lint Podspec
+              run: |
+                  pod lib lint ZKEmailSwift.podspec \
+                    --skip-tests \
+                    --skip-import-validation \
+                    --allow-warnings \
+                    --verbose
+
+            - name: Push to trunk
+              run: |
+                  pod trunk push ZKEmailSwift.podspec \
+                    --skip-tests \
+                    --skip-import-validation \
+                    --allow-warnings \
+                    --verbose
+              env:
+                  COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
