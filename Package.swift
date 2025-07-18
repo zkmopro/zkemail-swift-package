@@ -1,29 +1,30 @@
-// swift-tools-version: 5.10
-// The swift-tools-version declares the minimum version of Swift required to build this package.
-
+// swift-tools-version:5.9
 import PackageDescription
 
 let package = Package(
     name: "ZKEmailSwift",
     platforms: [
-        .macOS(.v10_15),
-        .iOS(.v15),
+        .iOS(.v14),
     ],
     products: [
         .library(
             name: "ZKEmailSwift",
-            targets: ["ZKEmailSwift"]),
+            targets: ["ZKEmailSwift", "MoproBindings"]
+        ),
     ],
+    dependencies: [],
     targets: [
         .target(
             name: "ZKEmailSwift",
             dependencies: [
-                .byName(name: "mopro")
+                .byName(name: "MoproBindings")
             ],
-            path: "Sources/"),
+            path: "Sources/"
+        ),
         .binaryTarget(
-            name: "mopro",
-            path: "Sources/MoproiOSBindings/MoproBindings.xcframework.zip"
+            name: "MoproBindings",
+            url: "https://github.com/zkmopro/mopro-zkemail-nr/releases/download/v0.1.0/MoproiOSBindings.zip",
+            checksum: "f6d168eec9a7b105cf73446b3f9de15c0b5ef9e3878fa94dde4ade24171f8cf8"
         ),
         .testTarget(
             name: "ZKEmailSwiftTests",
@@ -31,7 +32,7 @@ let package = Package(
             path: "Tests/",
             resources: [
                 .process("MoproAssets/zkemail_input.json"),
-                .process("MoproAssets/srs.local")
+                .process("MoproAssets/srs.local"),
             ]
         )
     ]

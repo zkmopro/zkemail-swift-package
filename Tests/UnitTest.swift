@@ -3,26 +3,29 @@ import Foundation
 
 @testable import ZKEmailSwift
 
-struct ZkEmailInputTest: Codable {
-    struct Header: Codable {
-        let storage: [String]
-        let len: Int
-    }
-    struct Pubkey: Codable {
-        let modulus: [String]
-        let redc: [String]
-    }
-    struct Sequence: Codable {
-        let index: Int
-        let length: Int
-    }
-    let header: Header
-    let pubkey: Pubkey
+struct ZkEmailInputTest: Decodable {
+    let header: HeaderTest
+    let pubkey: PubKeyTest
     let signature: [String]
-    let date_index: Int
-    let subject_sequence: Sequence
-    let from_header_sequence: Sequence
-    let from_address_sequence: Sequence
+    let date_index: UInt32
+    let subject_sequence: SequenceTest
+    let from_header_sequence: SequenceTest
+    let from_address_sequence: SequenceTest
+}
+
+struct HeaderTest: Decodable {
+    let storage: [UInt8]
+    let len: UInt32
+}
+
+struct PubKeyTest: Decodable {
+    let modulus: [String]
+    let redc: [String]
+}
+
+struct SequenceTest: Decodable {
+    let index: UInt32
+    let length: UInt32
 }
 
 class ZKEmailSwiftTests: XCTestCase {

@@ -64,14 +64,16 @@ Pod::Spec.new do |spec|
     spec.swift_versions = ['5.0']
 
     spec.pod_target_xcconfig = {
-        'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64 x86_64',
         'ONLY_ACTIVE_ARCH' => 'YES',
-        'SUPPORTS_MACCATALYST' => 'NO'
+        'SUPPORTS_MACCATALYST' => 'NO',
+        'VALID_ARCHS' => 'arm64 x86_64',
+        'ARCHS' => 'arm64 x86_64'
     }
 
     spec.user_target_xcconfig = {
-        'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64 x86_64',
-        'ONLY_ACTIVE_ARCH' => 'YES'
+        'ONLY_ACTIVE_ARCH' => 'YES',
+        'VALID_ARCHS' => 'arm64 x86_64',
+        'ARCHS' => 'arm64 x86_64'
     }
 
     #  When using multiple platforms
@@ -91,10 +93,25 @@ Pod::Spec.new do |spec|
     spec.source       = { :git => "https://github.com/zkmopro/zkemail-swift-package.git", :tag => "v#{spec.version}" }
 
     spec.prepare_command = <<-CMD
-    # Always work from the Pod’s root directory
-    echo "▶︎ Unzipping MoproBindings.xcframework…"
-    unzip -o Sources/MoproiOSBindings/MoproBindings.xcframework.zip
-    rm -f Sources/MoproiOSBindings/MoproBindings.xcframework.zip
+    set -e
+    cd Sources
+
+    ZIP_FILE="MoproiOSBindings.zip"
+    ZIP_URL="https://github.com/zkmopro/mopro-zkemail-nr/releases/download/v0.1.0/MoproiOSBindings.zip"
+    TARGET_DIR="MoproiOSBindings"
+
+    if [ ! -d "$TARGET_DIR" ]; then
+        echo "▶︎ Downloading $ZIP_FILE from GitHub release..."
+        curl -fL -o "$ZIP_FILE" "$ZIP_URL"
+
+        echo "▶︎ Unzipping $ZIP_FILE..."
+        unzip -q "$ZIP_FILE"
+
+        echo "▶︎ Cleaning up..."
+        rm -f "$ZIP_FILE"
+    else
+        echo "▶︎ $TARGET_DIR already exists, skipping download and unzip."
+    fi
     CMD
 
     spec.vendored_frameworks = "Sources/MoproiOSBindings/MoproBindings.xcframework"
