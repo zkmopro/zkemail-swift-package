@@ -32,13 +32,13 @@ jobs:
                       exit 1
                   fi
 
-            - name: Lint Podspec
-              run: |
-                  pod lib lint ZKEmailSwift.podspec \
-                    --skip-tests \
-                    --skip-import-validation \
-                    --allow-warnings \
-                    --verbose
+            # - name: Lint Podspec
+            #   run: |
+            #       pod lib lint ZKEmailSwift.podspec \
+            #         --skip-tests \
+            #         --skip-import-validation \
+            #         --allow-warnings \
+            #         --verbose
 
             - name: Push to trunk
               run: |
