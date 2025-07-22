@@ -89,16 +89,12 @@ Pod::Spec.new do |spec|
     #
 
     spec.source       = { :git => "https://github.com/zkmopro/zkemail-swift-package.git", :tag => "v#{spec.version}" }
+    spec.source = {
+        :http => "https://github.com/zkmopro/mopro-zkemail-nr/releases/download/v0.1.0/MoproiOSBindings.zip"
+    }
 
-    spec.prepare_command = <<-CMD
-    # Always work from the Pod’s root directory
-    echo "▶︎ Unzipping MoproBindings.xcframework…"
-    unzip -o Sources/MoproiOSBindings/MoproBindings.xcframework.zip
-    rm -f Sources/MoproiOSBindings/MoproBindings.xcframework.zip
-    CMD
-
-    spec.vendored_frameworks = "Sources/MoproiOSBindings/MoproBindings.xcframework"
-    spec.source_files  = "Sources/**/*.swift"
+    spec.vendored_frameworks = "MoproiOSBindings/MoproBindings.xcframework"
+    spec.source_files  = "MoproiOSBindings/*.swift"
 
     spec.static_framework = true
     
