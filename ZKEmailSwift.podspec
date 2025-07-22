@@ -112,7 +112,7 @@ Pod::Spec.new do |spec|
     
     # spec.resource  = "icon.png"
     
-    spec.preserve_paths = "Sources/MoproiOSBindings/**/*"
+    spec.preserve_paths = "MoproiOSBindings/**/*"
     # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"
   
   
