@@ -32,6 +32,7 @@ jobs:
                       exit 1
                   fi
 
+            # TODO: Lint would fail
             # - name: Lint Podspec
             #   run: |
             #       pod lib lint ZKEmailSwift.podspec \

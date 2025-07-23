@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
     #
   
     spec.name         = "ZKEmailSwift"
-    spec.version      = "0.2.6-alpha.0"
+    spec.version      = "0.2.6"
     spec.summary      = "A Swift SDK that wraps ZKEmail bindings for use in iOS apps."
   
     # This description is used to generate tags and improve search results.
